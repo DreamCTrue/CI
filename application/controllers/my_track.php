@@ -19,10 +19,6 @@ class My_track extends REST_Controller{
     }	
 	function track()
 	{	
-		header('Access-Control-Allow-Origin: *');
-        header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
-        header('Access-Control-Max-Age: 1000');
-        header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
 		/*
 		$this->input->post('s_id');
 		$this->input->post('j_name');
@@ -44,6 +40,16 @@ class My_track extends REST_Controller{
 		//print_r($data);
 		$this->load->model('track_model');
 		$this->track_model->go_track($data);
+	}
+	function track_options()
+	{
+                $this->cors_headers();
+                $this->response($_SERVER['HTTP_ORIGIN']);
+	}
+	function track_post()
+	{
+		$this->cors_headers();
+		$this->track();
 	}
 	function tracked_options()
 	{
