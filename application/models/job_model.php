@@ -4,12 +4,23 @@ class Job_model extends CI_Model {
 	public function __construct()
 	{
 	}
-	
+	function getJobs($id,$date)
+	{
+		$condition = " `s_id`='$id' ";
+		if($date!=false)
+			$condition = "$condition AND j_date='$date'";
+		$sql = "SELECT `j_complete`, `j_date`, `j_name` ,`j_cname`, `j_address` ,`j_url` " . 
+			" FROM `job_information` as i join `job_conform` as c on i.`j_id`=c.`j_id` " . 
+			" WHERE $condition Limit 10";
+		$result = $this->db->query($sql);
+		//echo $sql;
+		return $result->result_array();
+	}	
 	function getjob(){
 		$id=$_POST["id"];
 		mysql_query("set names 'utf8'");
-		$sql = "SELECT `j_complete`, `j_date`, `j_name` ,`j_cname`, `j_address` ,`j_url` FROM `job_information` as i join `job_conform` as c on i.`j_id`=c.`j_id` where `s_id`='$id'";
-		//$sql = "SELECT `j_complete`, `j_date`, `j_name` ,`j_cname`, `j_address` ,`j_url` FROM `job_information` as i join `job_conform` as c on i.`j_id`=c.`j_id` where `s_id`='A0028338'";
+		$sql = "SELECT `j_complete`, `j_date`, `j_name` ,`j_cname`, `j_address` ,`j_url` FROM `job_information` as i join `job_conform` as c on i.`j_id`=c.`j_id` where `s_id`='$id' Limit 10";
+		//$sql = "SELECT `j_complete`, `j_date`, `j_name` ,`j_cname`, `j_address` ,`j_url` FROM `job_information` as i join `job_conform` as c on i.`j_id`=c.`j_id` where `s_id`='A0028338 Limit 10'";
 		mysql_query($sql)or die ("無法查詢".mysql_error());
 		$result = mysql_query($sql);
 		
