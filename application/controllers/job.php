@@ -33,7 +33,7 @@ class Job extends REST_Controller{
     {
 	$this->cors_headers();
 	$this->load->model('job_model');
-	$data = $this->job_model->getJobs($this->input->get_post('id'),$this->input->get_post('date'));
+	$data = $this->job_model->getJobs($this->input->get_post('id'),$this->input->get_post('date'),$this->input->get_post('page'));
         $this->response($data);
     }
 

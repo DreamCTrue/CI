@@ -17,6 +17,15 @@ class My_track extends REST_Controller{
         header('Access-Control-Max-Age: 1000');
         header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
     }	
+	function jobCompetition_get()
+	{
+		$this->load->model('track_model');
+                $this->response($this->track_model->getJobcompetition($this->input->get_post('s_id'),$this->input->get_post('j_name')));
+	}
+	function jobCompetition_options()
+	{
+		$this->track_options();
+	}
 	function track()
 	{	
 		/*

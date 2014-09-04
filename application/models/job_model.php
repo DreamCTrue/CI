@@ -4,14 +4,16 @@ class Job_model extends CI_Model {
 	public function __construct()
 	{
 	}
-	function getJobs($id,$date)
+	function getJobs($id,$date,$page)
 	{
 		$condition = " `s_id`='$id' ";
+		$limit = 10;
+		$offset = ($page-1)*$limit;
 		if($date!=false)
 			$condition = "$condition AND j_date='$date'";
 		$sql = "SELECT `j_complete`, `j_date`, `j_name` ,`j_cname`, `j_address` ,`j_url` " . 
 			" FROM `job_information` as i join `job_conform` as c on i.`j_id`=c.`j_id` " . 
-			" WHERE $condition Limit 10";
+			" WHERE $condition Limit ${limit} OFFSET ${offset} ";
 		$result = $this->db->query($sql);
 		//echo $sql;
 		return $result->result_array();
@@ -19,7 +21,7 @@ class Job_model extends CI_Model {
 	function getjob(){
 		$id=$_POST["id"];
 		mysql_query("set names 'utf8'");
-		$sql = "SELECT `j_complete`, `j_date`, `j_name` ,`j_cname`, `j_address` ,`j_url` FROM `job_information` as i join `job_conform` as c on i.`j_id`=c.`j_id` where `s_id`='$id' Limit 10";
+		$sql = "SELECT `j_complete`, `j_date`, `j_name` ,`j_cname`, `j_address` ,`j_url` FROM `job_information` as i join `job_conform` as c on i.`j_id`=c.`j_id` where `s_id`='$id' Limit ${limit} OFFSET ${offset}";
 		//$sql = "SELECT `j_complete`, `j_date`, `j_name` ,`j_cname`, `j_address` ,`j_url` FROM `job_information` as i join `job_conform` as c on i.`j_id`=c.`j_id` where `s_id`='A0028338 Limit 10'";
 		mysql_query($sql)or die ("無法查詢".mysql_error());
 		$result = mysql_query($sql);
